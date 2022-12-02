@@ -16,6 +16,8 @@ public class MaquinaExpendedoraMejorada {
     private boolean premio;
     // Maximo de billetes para vender
     private int maximoBilletesVendidos;
+    // Da premio cada 4 billetes
+    private int numeroBilletesQuedanParaPremio;
 
     /**
      * Crea una maquina expendedora de billetes de tren con el 
@@ -31,6 +33,7 @@ public class MaquinaExpendedoraMejorada {
         contadorBilletesVendidos = 0;
         premio = premioBillete;
         maximoBilletesVendidos = maximoDeBilletesVendidos;
+        numeroBilletesQuedanParaPremio = 3;
     }
 
     public MaquinaExpendedoraMejorada(boolean premioBillete, int maximoDeBilletesVendidos) {
@@ -42,6 +45,7 @@ public class MaquinaExpendedoraMejorada {
         contadorBilletesVendidos = 0;
         premio = premioBillete;
         maximoBilletesVendidos = maximoDeBilletesVendidos;
+        numeroBilletesQuedanParaPremio = 3;
     }
 
     /**
@@ -113,7 +117,7 @@ public class MaquinaExpendedoraMejorada {
         int descuentoBillete = (precioBillete * 25) / 100;
         if (contadorBilletesVendidos < maximoBilletesVendidos) {
             if (cantidadDeDineroQueFalta <= 0) { 
-                if(premio == true){
+                if(premio == true && numeroBilletesQuedanParaPremio == 0) {
                     // Simula la impresion de un billete
                     System.out.println("##################");
                     System.out.println("# Billete de tren:");
@@ -129,7 +133,10 @@ public class MaquinaExpendedoraMejorada {
                     totalDineroAcumulado = totalDineroAcumulado + precioBillete;
                     // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
                     balanceClienteActual = balanceClienteActual - precioBillete;
+                    // Cuenta los billetes que se venden
                     contadorBilletesVendidos = contadorBilletesVendidos + 1;
+                    // Vuelve a reiniciar el contador de dar premio al cuarto billete vendido
+                    numeroBilletesQuedanParaPremio = 3;
                 }
                 else {
                     // Simula la impresion de un billete
@@ -144,7 +151,10 @@ public class MaquinaExpendedoraMejorada {
                     totalDineroAcumulado = totalDineroAcumulado + precioBillete;
                     // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
                     balanceClienteActual = balanceClienteActual - precioBillete;
-                    contadorBilletesVendidos = contadorBilletesVendidos + 1; 
+                    // Cuenta los billetes que se venden
+                    contadorBilletesVendidos = contadorBilletesVendidos + 1;
+                    // Resta los billetes vendidos hasta llegar al cuarto billete para dar premio
+                    numeroBilletesQuedanParaPremio = numeroBilletesQuedanParaPremio - 1;
                 }
             }
             else {
